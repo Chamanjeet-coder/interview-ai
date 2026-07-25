@@ -13,7 +13,20 @@ const __dirname = path.resolve();
 // const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname, "/../Frontend/dist")));
 app.use(cors({
-    origin: [process.env.BASE_URL_FRONTENED, "http://localhost:3000", "http://localhost:5173"],//test for railway
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        // Allow localhost and local network IPs in development
+        if (origin.includes('localhost') || origin.includes('127.0.0.1') || origin.includes('192.168') || origin.includes('10.0')) {
+            callback(null, true);
+        } else if (origin === process.env.BASE_URL_FRONTENED) {
+            // Allow production frontend URL
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true
 }))
 app.use(express.json());
