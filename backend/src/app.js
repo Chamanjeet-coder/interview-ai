@@ -12,7 +12,12 @@ const app = express();
 const __dirname = path.resolve();
 // const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname, "/../Frontend/dist")));
-app.use(cors())
+app.use(cors({
+    origin: "*",
+    credentials: false,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
