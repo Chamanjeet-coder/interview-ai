@@ -5,6 +5,7 @@ import cors from 'cors';
 import interviewRouter from "./routes/interview.routes.js"
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 
 dotenv.config()
 
@@ -12,7 +13,7 @@ const app = express();
 const __dirname = path.resolve();
 const frontendDistPath = path.join(__dirname, '/../Frontend/dist');
 const backendDistPath = path.join(__dirname, '/dist');
-const resolvedFrontendDistPath = path.existsSync(frontendDistPath) ? frontendDistPath : backendDistPath;
+const resolvedFrontendDistPath = fs.existsSync(frontendDistPath) ? frontendDistPath : backendDistPath;
 
 app.use(express.static(resolvedFrontendDistPath));
 app.use(cors({
