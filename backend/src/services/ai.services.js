@@ -80,8 +80,9 @@ async function generatePdfFromHtml(htmlContent) {
     })
 
     await browser.close()
-
-    return pdfBuffer
+    // console.log("PDF generated successfully."+" Size: ", pdfBuffer.length, "bytes")
+    // console.log(pdfBuffer)
+    return Buffer.from(pdfBuffer);
 }
 
 async function generateResumePdf({ resume, selfDescription, jobDescription }) {
@@ -112,9 +113,9 @@ async function generateResumePdf({ resume, selfDescription, jobDescription }) {
         }
     })
 
-
+    
     const jsonContent = JSON.parse(response.text)
-
+    // console.log("response from AI for resume pdf generation: ", jsonContent.html)
     const pdfBuffer = await generatePdfFromHtml(jsonContent.html)
 
     return pdfBuffer

@@ -1,0 +1,29 @@
+{
+  "name": "interview-ai",
+  "version": "1.0.0",
+  "description": "only for easy deployment",
+  "homepage": "https://github.com/Chamanjeet-coder/interview-ai#readme",
+  "bugs": {
+    "url": "https://github.com/Chamanjeet-coder/interview-ai/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chamanjeet-coder/interview-ai.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "\"\"",
+  "scripts": {
+    "dev": "concurrently -n SERVER,CLIENT -c blue,green \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "npm run dev --prefix backend",
+    "dev:client": "npm run dev --prefix frontend",
+    "install:all": "npm install --prefix backend && npm install --prefix frontend --include=dev",
+    "build": "npm run build --prefix frontend",
+    "build:client": "npm run build --prefix frontend",
+    "start": "npm start --prefix backend"
+  },
+  "dependencies": {
+    "concurrently": "^10.0.4"
+  }
+}
