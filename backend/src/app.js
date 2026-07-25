@@ -8,11 +8,14 @@ import dotenv from 'dotenv';
 dotenv.config()
 
 const app = express();
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const clientDist = path.join(__dirname, '..', '..', 'Frontend', 'dist');
+app.use(express.static(clientDist));
 app.use(cors({
     origin: process.env.BASE_URL_FRONTENED,//test for railway
     credentials: true
 }))
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
