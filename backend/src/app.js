@@ -4,14 +4,14 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import interviewRouter from "./routes/interview.routes.js"
 import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config()
 
 const app = express();
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const clientDist = path.join(__dirname, '..', '..', 'Frontend', 'dist');
-app.use(express.static(clientDist));
+const __dirname = path.resolve();
+// const __dirname = path.dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.join(__dirname, "/../frontend/dist")));
 app.use(cors({
     origin: process.env.BASE_URL_FRONTENED,//test for railway
     credentials: true
