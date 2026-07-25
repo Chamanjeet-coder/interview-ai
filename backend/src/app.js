@@ -37,16 +37,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 
+app.use('/api/auth', authRouter)
+app.use('/api/interview', interviewRouter)
+
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.sendFile(path.join(__dirname, '/../Frontend/dist/index.html'));
 });
 
-app.use("/api/auth", authRouter)
-app.use("/api/interview", interviewRouter)
-
 // Fallback to serve index.html for SPA routing
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "/../Frontend/dist/index.html"));
+app.get('*', (req, res) => {
+    if (req.path.startsWith('/api/')) {
+        return res.status(404).json({ message: 'API route not found' });
+    }
+    res.sendFile(path.join(__dirname, '/../Frontend/dist/index.html'));
 });
 
 export default app;
