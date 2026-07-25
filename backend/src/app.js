@@ -13,10 +13,24 @@ const __dirname = path.resolve();
 // const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname, "/../Frontend/dist")));
 app.use(cors({
-    origin: "*",
-    credentials: false,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    origin: (origin, callback) => {
+        const allowedOrigins = [
+            process.env.BASE_URL_FRONTENED,
+            'http://localhost:3000',
+            'http://localhost:5173',
+            'http://127.0.0.1:3000',
+            'http://127.0.0.1:5173'
+        ];
+
+        if (!origin || allowedOrigins.includes(origin) || origin.includes('192.168') || origin.includes('10.0')) {
+            callback(null, true);
+        } else {
+            callback(null, true);
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'token']
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
